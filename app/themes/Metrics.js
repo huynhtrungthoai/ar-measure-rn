@@ -3,7 +3,7 @@ import { Dimensions, Platform, StatusBar } from "react-native";
 const { width, height } = Dimensions.get("window");
 
 // Used via Metrics.baseMargin
-const metrics = {
+const Metrics = {
   getStatusBarHeight: () => {
     return StatusBar.currentHeight || 25;
   },
@@ -26,4 +26,4 @@ const metrics = {
   },
 };
 
-export default metrics;
+export default Metrics;

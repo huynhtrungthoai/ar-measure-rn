@@ -177,9 +177,14 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${PODS_ROOT}/../../node_modules/@viro-community/react-viro/ios/dist/ViroRenderer/ViroKit.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/Flipper-DoubleConversion/double-conversion.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${PODS_ROOT}/../../node_modules/@viro-community/react-viro/ios/dist/ViroRenderer/ViroKit.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL-Universal/OpenSSL.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/hermes.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

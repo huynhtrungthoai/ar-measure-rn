@@ -6,8 +6,8 @@
         create_point: require("../images/ic_create_point.png"),
         delete: require("../images/ic_delete.png"),
         add: require("../images/ic_add.png"),
-
-
+        setting: require("../images/ic_setting.png"),
+        close_circle: require("../images/ic_close_circle.png"),
     },
     object: {
         soccer_ball: require("../images/soccerball/soccer_ball.vrx"),

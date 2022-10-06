@@ -1,9 +1,9 @@
 import { ViroARSceneNavigator } from "@viro-community/react-viro";
 import React, { useState } from "react";
 import { Image, StyleSheet, TouchableHighlight, View } from "react-native";
-import { Images, Metrics } from "./../themes";
+import { Images } from "./../themes";
 import SettingModal from "./components/SettingModal";
-import HomeScreen from "./HomeScreen";
+import MeasureAR from "./MeasureAR";
 
 const MainLayout = () => {
   const [isAdd, setIsAdd] = useState(false);
@@ -41,7 +41,7 @@ const MainLayout = () => {
       <ViroARSceneNavigator
         autofocus={true}
         initialScene={{
-          scene: HomeScreen,
+          scene: MeasureAR,
         }}
         viroAppProps={{ isAdd, isCreatePoint, isDelete }}
         style={styles.f1}
@@ -85,17 +85,6 @@ const MainLayout = () => {
           />
         </TouchableHighlight>
       </View>
-      <View
-        style={{
-          height: 6,
-          width: 6,
-          backgroundColor: "white",
-          borderRadius: 3,
-          position: "absolute",
-          top: Metrics.screenHeight / 2,
-          right: Metrics.screenWidth / 2,
-        }}
-      />
       <TouchableHighlight
         style={[styles.buttons, { position: "absolute", top: 24, right: 24 }]}
         onPress={_onOpenSetting}

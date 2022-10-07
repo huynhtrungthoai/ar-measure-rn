@@ -86,6 +86,18 @@ const MainLayout = () => {
           />
         </TouchableHighlight>
       </View>
+      {/* White center point */}
+      {/* <View
+        style={{
+          height: 6,
+          width: 6,
+          backgroundColor: "white",
+          borderRadius: 3,
+          position: "absolute",
+          top: Metrics.screenHeight / 2,
+          right: Metrics.screenWidth / 2,
+        }}
+      /> */}
       <TouchableHighlight
         style={[styles.buttons, { position: "absolute", top: 24, right: 24 }]}
         onPress={_onOpenSetting}

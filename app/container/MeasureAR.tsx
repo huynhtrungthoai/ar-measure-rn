@@ -97,7 +97,7 @@ const MeasureAR = (props: MAIN_PROPS) => {
       case "feet":
         return "ft";
       default:
-        return "";
+        return "cm";
     }
   };
 

@@ -14,6 +14,7 @@ import { Images, Metrics } from "themes";
 interface ModalProps {
   isVisible: boolean;
   onClose: () => void;
+  onPress: (selectedUnit: string) => void;
 }
 
 const { width, height } = Dimensions.get("screen");
@@ -24,8 +25,12 @@ const UNIT_LIST = ["cm", "m", "inch", "feet"];
 
 const LineView = (props: ModalProps) => {
   const insets = useSafeAreaInsets();
-  const { isVisible, onClose } = props;
+  const { isVisible, onClose, onPress } = props;
   const [selectedUnit, setSelectedUnit] = useState<string>("cm");
+
+  const onItemPress = (unit: string) => {
+    onPress(unit), setSelectedUnit(unit);
+  };
 
   return (
     <Modal
@@ -59,7 +64,7 @@ const LineView = (props: ModalProps) => {
                     styles.itemStyle,
                     { backgroundColor: isSelected ? "yellow" : "white" },
                   ]}
-                  onPress={() => setSelectedUnit(unitItem)}
+                  onPress={() => onItemPress(unitItem)}
                 >
                   <Text style={{ fontSize: 15, fontWeight: "bold" }}>
                     {unitItem}

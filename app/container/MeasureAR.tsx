@@ -16,6 +16,7 @@ interface MAIN_PROPS {
   isAdd: boolean;
   isCreatePoint: boolean;
   isDelete: boolean;
+  unit: string;
   sceneNavigator?: any;
 }
 
@@ -41,10 +42,12 @@ ViroAnimations.registerAnimations({
 });
 
 const MeasureAR = (props: MAIN_PROPS) => {
-  const { isAdd, isCreatePoint, isDelete } = props.sceneNavigator?.viroAppProps;
+  const { isAdd, isCreatePoint, isDelete, unit } =
+    props.sceneNavigator?.viroAppProps;
   const [initialized, setInitialized] = useState(false);
   const [text, setText] = useState("Initializing AR...");
   const [distance, setDistance] = useState(0);
+  const [distanceConvert, setDistanceConvert] = useState(0);
 
   const [rotate, setRotate] = useState<any>([0, 0, 0]);
 
@@ -71,6 +74,10 @@ const MeasureAR = (props: MAIN_PROPS) => {
     isDelete && onClearPoint();
   }, [isDelete]);
 
+  useEffect(() => {
+    checkDistanceByUnit(unit, distance);
+  }, [unit]);
+
   const _onTrackingUpdated = (state: any, reason: any) => {
     // if the state changes to "TRACKING_NORMAL" for the first time, then
     // that means the AR session has initialized!
@@ -78,6 +85,38 @@ const MeasureAR = (props: MAIN_PROPS) => {
     //   setInitialized(true);
     //   setText("Hello World!");
     // }
+  };
+
+  const checkUnit = (unit: string) => {
+    // ["cm", "m", "inch", "feet"];
+    switch (unit) {
+      case "m":
+        return "m";
+      case "inch":
+        return "in";
+      case "feet":
+        return "ft";
+      default:
+        return "";
+    }
+  };
+
+  const checkDistanceByUnit = (unit: string, distance: number) => {
+    // ["cm", "m", "inch", "feet"];
+    switch (unit) {
+      case "m":
+        setDistanceConvert(distance / 100);
+        break;
+      case "inch":
+        setDistanceConvert(distance / 2.54);
+        break;
+      case "feet":
+        setDistanceConvert(distance / 2.54 / 12);
+        break;
+      default:
+        setDistanceConvert(distance);
+        break;
+    }
   };
 
   const handleSceneClick = () => {
@@ -125,8 +164,23 @@ const MeasureAR = (props: MAIN_PROPS) => {
     // // Compute the straight-line distance.
     const distanceMeters = Math.sqrt(dx * dx + dy * dy + dz * dz);
     console.log(distanceMeters * 100);
-
+    let standardDistance = distanceMeters * 100; //cm
     setDistance(distanceMeters * 100);
+    switch (unit) {
+      case "m":
+        standardDistance = standardDistance / 100;
+        break;
+      case "inch":
+        standardDistance = standardDistance / 2.54;
+        break;
+      case "feet":
+        standardDistance = standardDistance / 2.54 / 12;
+        break;
+      default:
+        standardDistance;
+        break;
+    }
+    setDistanceConvert(standardDistance);
   };
 
   const onAddPoint = () => {};
@@ -205,7 +259,12 @@ const MeasureAR = (props: MAIN_PROPS) => {
         />
         {isFirstPoint && (
           <ViroText
-            text={distance ? distance.toFixed(0) + "cm" : ""}
+            text={
+              distanceConvert
+                ? distanceConvert.toFixed(unit === "feet" ? 2 : 1) +
+                  `${checkUnit(unit)}`
+                : ""
+            }
             scale={[0.1, 0.1, 0.1]}
             position={[0, 0, -0.01]}
             style={styles.helloWorldTextStyle}
@@ -276,7 +335,12 @@ const MeasureAR = (props: MAIN_PROPS) => {
           materials={["red"]}
         /> */}
         <ViroText
-          text={distance ? distance.toFixed(0) + "cm" : ""}
+          text={
+            distanceConvert
+              ? distanceConvert.toFixed(unit === "feet" ? 2 : 1) +
+                `${checkUnit(unit)}`
+              : ""
+          }
           scale={[0.1, 0.1, 0.1]}
           position={[0, 0, -0.01]}
           style={styles.helloWorldTextStyle}

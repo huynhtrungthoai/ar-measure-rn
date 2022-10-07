@@ -10,6 +10,7 @@ const MainLayout = () => {
   const [isCreatePoint, setIsCreatePoint] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [isShowSetting, setIsShowSetting] = useState(false);
+  const [selectedUnit, setSelectedUnit] = useState("cm");
 
   const _onAddPoint = () => {
     setIsAdd(true);
@@ -43,7 +44,7 @@ const MainLayout = () => {
         initialScene={{
           scene: MeasureAR,
         }}
-        viroAppProps={{ isAdd, isCreatePoint, isDelete }}
+        viroAppProps={{ isAdd, isCreatePoint, isDelete, unit: selectedUnit }}
         style={styles.f1}
       />
       <View
@@ -95,6 +96,7 @@ const MainLayout = () => {
       <SettingModal
         isVisible={isShowSetting}
         onClose={() => setIsShowSetting(false)}
+        onPress={(unit: string) => setSelectedUnit(unit)}
       />
     </View>
   );
